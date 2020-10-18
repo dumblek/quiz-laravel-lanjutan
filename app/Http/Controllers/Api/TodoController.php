@@ -22,7 +22,7 @@ class TodoController extends Controller
 
     public function store(TodoRequest $request){
 
-      $todo = auth()->user()->create([
+      $todo = auth()->user()->todos()->create([
         'text' => $request->text,
         'done' => 0
       ]);
