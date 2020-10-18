@@ -5,7 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Requests\Auth\RegisterRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\User;
+use App\Models\User;
+use App\Events\UserRegisteredEvent;
 
 class RegisterController extends Controller
 {
@@ -31,9 +32,9 @@ class RegisterController extends Controller
       event(new UserRegisteredEvent($user));
 
       return response()->json([
-         'response_code' => '00',
+         'response_code' => '200',
          'response_message' => 'user berhasil didaftarkan' ,
-         'data'    => data
+         'data'    => $data
 
        ], 200);
 

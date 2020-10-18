@@ -5,20 +5,22 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\TodoRequest;
 use Illuminate\Http\Request;
-use App\Todo;
+use App\Models\Todo;
+use Auth;
+use App\Http\Resources\TodoResource;
 
 
 class TodoController extends Controller
 {
   public function index(){
 
-      $todos = Todo::where('user_id' , user()->id)->orderBy('created_at' , 'desc')->get();
+      $todos = Todo::where('user_id' , auth()->user()->id)->orderBy('created_at' , 'desc')->get();
 
       return TodoResource::collection($todos);
     }
 
     public function store(TodoRequest $request){
-
+      
       $todo = auth()->user()->create([
         'text' => $request->text,
         'done' => 0

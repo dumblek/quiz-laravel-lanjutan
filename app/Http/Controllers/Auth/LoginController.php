@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Auth;
 
 class LoginController extends Controller
 {
@@ -16,20 +17,20 @@ class LoginController extends Controller
      */
     public function __invoke(LoginRequest $request)
     {
-
+      
       $data = [];
 
       $credentials = $request->only(['no_hp', 'password']);
-
-      if (! $token = auth()->attempts($credentials)) {
+      
+      if (! $token = auth()->attempt($credentials)) {
           return response()->json(['error' => 'Unauthorized'], 401);
       }
-
+      
       $data['token'] = $token;
       $data['user'] = Auth::user();
 
       return response()->json([
-         'response_code' => '00',
+         'response_code' => '200',
          'response_message' => 'user berhasil login' ,
          'data'    => $data
 
