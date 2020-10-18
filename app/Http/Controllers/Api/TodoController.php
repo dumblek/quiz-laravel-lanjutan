@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Todo;
 use Auth;
 use App\Http\Resources\TodoResource;
+use App\Events\TodoCreatedEvent;
 
 
 class TodoController extends Controller
@@ -20,7 +21,7 @@ class TodoController extends Controller
     }
 
     public function store(TodoRequest $request){
-      
+
       $todo = auth()->user()->create([
         'text' => $request->text,
         'done' => 0
